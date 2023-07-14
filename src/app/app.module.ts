@@ -12,13 +12,15 @@ import { MatInputModule } from '@angular/material/input';
 
 //Reactive forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SpeedoMeterComponent } from './speedo-meter/speedo-meter.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpeedoMeterComponent
   ],
   imports: [
     BrowserModule,

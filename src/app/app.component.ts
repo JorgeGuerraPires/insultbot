@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 //TensorFlow.js: pre-trained model
 import * as toxicity from '@tensorflow-models/toxicity';
 
-
 import { FormControl } from '@angular/forms';
+import { SpeedoMeterComponent } from './speedo-meter/speedo-meter.component';
+
 
 
 
@@ -19,6 +20,13 @@ export class AppComponent implements OnInit {
   moderationText = new FormControl('');
 
   moderation = "I am thinking, just a moment 🤖🤖";
+
+  @ViewChild(SpeedoMeterComponent)
+  child!: SpeedoMeterComponent;
+
+
+  //results
+  insult_prob: number = 0;
 
 
 
@@ -41,6 +49,15 @@ export class AppComponent implements OnInit {
 
       //now we use our model, parametrized
       model.classify(`${this.moderationText.value}`).then(predictions => {
+
+        // console.log(JSON.stringify(predictions, null, 2));
+
+        // console.log(predictions[1].results[0].probabilities[1])
+
+        this.insult_prob = predictions[1].results[0].probabilities[1] * 100;
+
+        this.child.updateSpeed();
+
 
         const aux = predictions.filter((elem: any) => elem.results[0].match);
 
